@@ -7,12 +7,16 @@ import { addTask } from '../features/userSlice'
 function ToDoForm() {
   const dispatch = useDispatch();
   const [inputTask , setInputTask] = useState('')
+  const now = new Date();
+  const time = now.toLocaleDateString();
   const addingTask = (e) => {
     e.preventDefault()
     if (inputTask.trim() !== ''){
       dispatch(addTask({
         id : Date.now(),
-        task : inputTask
+        task : inputTask,
+        comp : false,
+        Time : time
       }))
     } 
     setInputTask('')

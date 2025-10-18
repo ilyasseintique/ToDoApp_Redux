@@ -12,10 +12,16 @@ export const userSlice = createSlice({
     reducers : {
         addTask : (state,action) => {
             state.Tasks.push(action.payload);
+            state.showedTasks = state.Tasks;
+            state.NotComTasks = state.Tasks
         }, 
         CompletedTasks : (state,action) => {
-            state.CompletedTasks.push(action.payload);
-            state.NotComTasks = state.NotComTasks.filter((elem) => elem.id != action.payload.id);
+            state.Tasks = state.Tasks.map((elem) => { if (elem.id == action.payload.id) {elem.comp = action.payload.comp}
+                            return elem
+            })
+            state.CompletedTasks = state.Tasks.filter((elem) => elem.comp === true);
+            state.NotComTasks = state.Tasks.filter((elem) => elem.comp === false);
+            state.showedTasks = state.Tasks;
         },
         showingTasks : (state,action) => {
             state.showedTasks = action.payload;
